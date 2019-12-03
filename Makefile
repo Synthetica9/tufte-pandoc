@@ -17,7 +17,7 @@ SETUP:
 	mkdir -p $(BRAID_OUT_DIR)
 
 $(BUILD_DIR)/combined.md: $(BUILD_DIR)/header.yaml $(BRAIDED)
-	cat $^ > $@
+	ls $^ | sort | xargs cat > $@
 
 $(BRAID_OUT_DIR)/%.md: md-src/%.md filters/before.lua
 	codebraid pandoc $< -o $@ --overwrite \
