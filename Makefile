@@ -22,7 +22,7 @@ $(BUILD_DIR)/combined.md: $(BUILD_DIR)/header.yaml $(BRAIDED)
 $(BRAID_OUT_DIR)/%.md: md-src/%.md filters/before.lua
 	codebraid pandoc $< -o $@ --overwrite \
 		--lua-filter filters/before.lua \
-		--cache-dir $(BUILD_DIR)/codebraid
+		--no-cache
 
 	# Add an extra trailing newline, because otherwise pandoc could get confused
 	echo >> $@
