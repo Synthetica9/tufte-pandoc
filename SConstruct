@@ -58,7 +58,7 @@ genv.Append(BUILDERS={
 genv.VariantDir('.build', '.', duplicate=0)
 
 md_files = Glob(".build/md-src/*.md")
-header = ".build/header.yaml"
+yaml_header = "header.yaml"
 tex_header = "header.tex"
 
 braided = [
@@ -66,13 +66,13 @@ braided = [
     for md in md_files
 ]
 
-header_md = genv.Header(header)
-header_json = genv.Pandoc(header_md, suffix='.json', PANDOC_OPTS='--to json')
-
 combined = genv.Pandoc(
-    ".build/combined.json", braided + header_json,
+    ".build/combined.json", braided,
     FILTERS="./filters/after.lua",
+    PANDOC_OPTS=['--metadata-file', yaml_header],
 )
+
+genv.Depends(combined, yaml_header)
 
 final = genv.PDF(
     "out.pdf", combined,
