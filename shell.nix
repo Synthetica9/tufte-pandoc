@@ -20,11 +20,11 @@ let
 in
 mkShell {
   buildInputs = [
-    pandoc
     latex
-    yq
-    scons_py3
-    nixpkgs-codebraid.codebraid
     librsvg
+    nixpkgs-codebraid.codebraid
+    pandoc
+    scons_py3
+    yq
   ];
 }
