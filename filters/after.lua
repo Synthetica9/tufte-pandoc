@@ -29,8 +29,6 @@ function extract_caption(blocks)
     end
     table.remove(dlist.content, 1)
 
-    print(fst[1][1].t)
-
     label_arg = {}
     table.insert(label_arg, latexInline("\\label{"))
     for _, v in ipairs(fst[1]) do
@@ -39,7 +37,6 @@ function extract_caption(blocks)
     table.insert(label_arg, latexInline("}"))
 
     label = pandoc.Para(label_arg)
-    print(label.t)
 
     caption_text = {latexBlock("\\caption{")}
     for _, v in ipairs(fst[2]) do
@@ -60,7 +57,6 @@ end
 function divEnv(div, keyword, env)
   print("trying for " .. keyword .. ":" .. env )
   included = has_value(div.classes, keyword)
-  print(type(div.classes))
   if included then
     print("Transforming div " .. keyword .. " to env " .. env)
     capt = extract_caption(div.content)
@@ -69,7 +65,7 @@ function divEnv(div, keyword, env)
     end
     return pandoc.Div({
       pandoc.RawBlock("latex", "\\begin{" .. env .. "}"),
-      div,
+      pandoc.Div(div.content),
       caption,
       pandoc.RawBlock("latex", "\\end{" .. env .. "}")
     })
