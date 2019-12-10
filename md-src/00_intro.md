@@ -30,7 +30,7 @@ $$π = 4$$
 
 :::
 
-::: { .sidebar }
+::: sidebar
 
 ![](https://www.haskell.org/img/haskell-logo.svg)
 

@@ -1,4 +1,0 @@
-#! /usr/bin/env nix-shell
-#! nix-shell -I . -i bash -p entr
-
-ls header.yaml md-src/*.md filters/*.lua | entr -cdr -- ./make
