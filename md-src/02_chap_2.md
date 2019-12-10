@@ -6,7 +6,7 @@ print(__file__)
 
 ## W I D E B O I E
 
-::: sidebar
+::: widefigure
 
 lipsum
 
