@@ -25,6 +25,7 @@ def pandoc(target, source, env, for_signature):
         command += ['-o', outfile]
 
     for filt in asList(env.get('FILTERS', [])):
+        env.Depends(target, filt)
         filt = str(filt)
         filt_arg = '--lua-filter' if filt.lower().endswith('lua') else '--filter'
         command += [filt_arg, filt]
