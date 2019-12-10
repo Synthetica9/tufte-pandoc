@@ -1,11 +1,8 @@
-from __future__ import print_function
-
 import os
 from pprint import pprint
 import shlex
 import sys
 
-print("Evaluating using", sys.version)
 
 PANDOC = 'PANDOC'
 
@@ -22,17 +19,17 @@ def pandoc(target, source, env, for_signature):
     command += asList(env.get('PANDOC_OPTS', []), convert=shlex.split)
 
     for infile in source:
-        command += [str(infile)]
+        command += [infile]
 
     for outfile in target:
-        command += ['-o', str(outfile)]
+        command += ['-o', outfile]
 
     for filt in asList(env.get('FILTERS', [])):
         filt = str(filt)
         filt_arg = '--lua-filter' if filt.lower().endswith('lua') else '--filter'
         command += [filt_arg, filt]
 
-    return shlex.join(command)
+    return shlex.join(map(str, command))
 
 
 headerFile = [
@@ -60,7 +57,8 @@ genv.Append(BUILDERS={
 genv.VariantDir('.build', '.', duplicate=0)
 
 md_files = Glob(".build/md-src/*.md")
-header = [".build/header.yaml"]
+header = ".build/header.yaml"
+tex_header = "header.tex"
 
 braided = [
     genv.CodeBraid(md, FILTERS="./filters/before.lua")
@@ -70,8 +68,14 @@ braided = [
 header_md = genv.Header(header)
 header_json = genv.Pandoc(header_md, suffix='.json', PANDOC_OPTS='--to json')
 
-genv.PDF(
-    "out.pdf", braided + header_json,
+combined = genv.Pandoc(
+    ".build/combined.json", braided + header_json,
     FILTERS="./filters/after.lua",
-    PANDOC_OPTS="--pdf-engine xelatex"
 )
+
+final = genv.PDF(
+    "out.pdf", combined,
+    PANDOC_OPTS="--pdf-engine xelatex -H" + tex_header
+)
+
+genv.Depends(final, tex_header)

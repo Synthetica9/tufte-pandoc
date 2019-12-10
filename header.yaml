@@ -3,9 +3,5 @@ author: Patrick Hilhorst (s4577434)
 title: Title
 subtitle: Subtitle
 papersize: a4
-header-includes: |
-  \usepackage{lipsum}
-  \usepackage{unicode-math}
-  \usepackage{cleveref}
 numbersections: true
 toc: true

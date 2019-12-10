@@ -1,5 +1,7 @@
 # Next chapter
 
-Hi!
+``` { .python .cb.nb}
+print(__file__)
+```
 
 \lipsum

@@ -1,5 +1,6 @@
 # Chapter 2
 
 ```{ .python .cb.nb }
-print('New file new session')
+# New file new session!
+print(__file__)
 ```
