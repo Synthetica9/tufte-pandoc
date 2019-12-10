@@ -8,34 +8,38 @@ We are in [!hello-world].
 
 ::: { .sidebar }
 
+example
+
+: An example
+
 ```{ .python .cb.nb }
 for i in range(5):
     print(i)
 ```
 
-\caption{An example}
-\label{example}
-
 :::
 
 ::: { .sidebar }
+
+sbm
+
+: Some maths in the sidebar
 
 Some math in the margin:
 
 $$E = mc^2$$
 $$π = 4$$
 
-\caption{Sidebar math}
-\label{sbm}
-
 :::
 
-::: sidebar
+::: { .sidebar }
+
+haskell
+
+: The glorious Haskell logo.
+  Based on the greek letter $λ$, from $λ$-calculus.
 
 ![](https://www.haskell.org/img/haskell-logo.svg)
-
-\caption{Haskell logo}
-\label{haskell}
 
 :::
 

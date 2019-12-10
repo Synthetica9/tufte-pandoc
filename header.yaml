@@ -4,4 +4,4 @@ title: Title
 subtitle: Subtitle
 papersize: a4
 numbersections: true
-toc: true
+toc: false
