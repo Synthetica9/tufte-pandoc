@@ -49,8 +49,8 @@ function extract_caption(blocks)
 
 
     caption = pandoc.Div {
-        label,
         pandoc.Para(pandoc.utils.blocks_to_inlines(caption_text, {pandoc.Space()})),
+        label,
     }
 
     return caption
