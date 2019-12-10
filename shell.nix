@@ -25,5 +25,6 @@ mkShell {
     yq
     scons_py3
     nixpkgs-codebraid.codebraid
+    librsvg
   ];
 }
