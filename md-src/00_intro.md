@@ -5,6 +5,9 @@
 We are in [!hello-world].
 [!Hello-world] is the section we are in.
 [!Sub] is also cool.
+Because of @cb-12, citations no longer crash codebraid!
+Citations get generated from thin air. [@xkcd-978]
+According to @unknown, unknown citations result in question marks?
 
 ::: { .sidebar }
 
@@ -43,5 +46,6 @@ haskell
 
 :::
 
-Hello! [!haskell]
+In [!haskell] we see the haskell logo.
+
 <!-- \lipsum -->

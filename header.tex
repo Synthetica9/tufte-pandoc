@@ -1,4 +1,13 @@
-\usepackage{unicode-math}
 \usepackage{cleveref}
+
+\newenvironment{widetwocolumn}
+{
+    \begin{figure*}
+    \begin{multicols}{2}
+}
+{
+    \end{multicols}
+    \end{figure*}
+}
 
 \usepackage{lipsum}

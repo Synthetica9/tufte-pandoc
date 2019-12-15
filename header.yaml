@@ -5,3 +5,11 @@ subtitle: Subtitle
 papersize: a4
 numbersections: true
 toc: false
+
+# Options for pandoc-citeproc:
+bibliography:
+    - bibliography.bib
+# Uncomment for ACM citations:
+citation-style: https://github.com/citation-style-language/styles/raw/master/association-for-computing-machinery.csl
+# Uncomment for IEEE-Style citations:
+# citation-style: https://github.com/citation-style-language/styles/raw/master/ieee.csl

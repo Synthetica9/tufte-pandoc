@@ -20,6 +20,8 @@ moreover
 
 :::
 
+![_Citogenisis_ [@xkcd-978] [!!citogenesis]](https://imgs.xkcd.com/comics/citogenesis.png)
+
 ## Continuing with smol text
 
 \lipsum

@@ -2,6 +2,7 @@ import os
 from pprint import pprint
 import shlex
 import sys
+import yaml
 
 
 PANDOC = 'PANDOC'
@@ -11,6 +12,15 @@ def asList(x, convert=lambda x: [x]):
     if isinstance(x, str):
         return convert(x)
     return x
+
+
+def bibFiles(fileName):
+    with open(fileName) as f:
+        header = yaml.load(f)
+        try:
+            yield from header['bibliography']
+        except KeyError:
+            pass
 
 
 def pandoc(target, source, env, for_signature):
@@ -25,7 +35,7 @@ def pandoc(target, source, env, for_signature):
         command += ['-o', outfile]
 
     for filt in asList(env.get('FILTERS', [])):
-        env.Depends(target, filt)
+        # env.Depends(target, filt)
         filt = str(filt)
         filt_arg = '--lua-filter' if filt.lower().endswith('lua') else '--filter'
         command += [filt_arg, filt]
@@ -53,6 +63,7 @@ genv.Append(BUILDERS={
     ),
     'Pandoc': Builder(generator=pandoc),
     'Header': Builder(action=headerFile, suffix='.md'),
+    # 'PandocTemplate': Builder(action='pandoc -D $TYPE > $TARGET'),
 })
 
 genv.VariantDir('.build', '.', duplicate=0)
@@ -60,23 +71,32 @@ genv.VariantDir('.build', '.', duplicate=0)
 md_files = Glob(".build/md-src/*.md")
 yaml_header = "header.yaml"
 tex_header = "header.tex"
+# template = genv.PandocTemplate(
+# target='.build/template.tex', source=[], TYPE='latex')
 
 braided = [
-    genv.CodeBraid(md, FILTERS="./filters/before.lua")
+    genv.CodeBraid(
+        md,
+        FILTERS="./filters/before.lua",
+        PANDOC_OPTS='--extract-media .build/media'
+    )
     for md in md_files
 ]
 
 combined = genv.Pandoc(
     ".build/combined.json", braided,
-    FILTERS="./filters/after.lua",
+    FILTERS=["./filters/after.lua", "pandoc-citeproc"],
     PANDOC_OPTS=['--metadata-file', yaml_header],
 )
 
 genv.Depends(combined, yaml_header)
 
+genv.Depends(combined, list(bibFiles(yaml_header)))
+
+
 final = genv.PDF(
     "out.pdf", combined,
-    PANDOC_OPTS="--pdf-engine xelatex -H" + tex_header
+    PANDOC_OPTS="--pdf-engine xelatex -H".split() + [tex_header]
 )
 
 genv.Depends(final, tex_header)

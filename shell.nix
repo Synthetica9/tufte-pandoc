@@ -1,4 +1,12 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgsHash ? "86ed15dcce7de9c9cac5755663b622142a89d76d" }:
+
+let
+
+  pkgs = import
+    (builtins.fetchTarball "https://github.com/nixos/Nixpkgs/archive/${pkgsHash}.tar.gz")
+    {};
+
+in
 
 with pkgs;
 
@@ -17,14 +25,19 @@ let
   };
 
   scons_py3 = scons.override { python2Packages = python38Packages; };
+  scons_withPackages = scons_py3.overrideAttrs (old: {
+      propagatedBuildInputs = old.propagatedBuildInputs or [] ++
+        (with python38Packages; [pyyaml]);
+  });
 in
 mkShell {
-  buildInputs = [
+  buildInputs = with haskell.packages.ghc881; [
+    pandoc_2_9
     latex
     librsvg
     nixpkgs-codebraid.codebraid
-    pandoc
-    scons_py3
+    scons_withPackages
     yq
+    pandoc-citeproc_0_16_4_1
   ];
 }
