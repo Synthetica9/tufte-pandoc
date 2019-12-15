@@ -4,7 +4,7 @@ let
 
   pkgs = import
     (builtins.fetchTarball "https://github.com/nixos/Nixpkgs/archive/${pkgsHash}.tar.gz")
-    {};
+    { config.allowBroken = true; };
 
 in
 
