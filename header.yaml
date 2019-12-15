@@ -11,7 +11,8 @@ toc: false
 # Options for pandoc-citeproc:
 bibliography:
     - bibliography.bib
-# Uncomment for ACM citations:
-citation-style: https://github.com/citation-style-language/styles/raw/master/association-for-computing-machinery.csl
+# Uncomment for ACM SIGGRAPH citations:
+citation-style: https://www.zotero.org/styles/acm-siggraph
 # Uncomment for IEEE-Style citations:
-# citation-style: https://github.com/citation-style-language/styles/raw/master/ieee.csl
+# citation-style: https://www.zotero.org/styles/ieee
+# For more styles, see https://www.zotero.org/styles/

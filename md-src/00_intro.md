@@ -5,8 +5,8 @@
 We are in [!hello-world].
 [!Hello-world] is the section we are in.
 [!Sub] is also cool.
-Because of @cb-12, citations no longer crash codebraid!
-Citations get generated from thin air. [@xkcd-978]
+Because of work by @cb-12, citations no longer crash codebraid!
+Citations get generated from thin air. [@xkcd-978; @cb-12]
 According to @unknown, unknown citations result in question marks?
 
 ::: { .sidebar }
