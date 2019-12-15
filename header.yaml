@@ -1,7 +1,7 @@
 author: Patrick Hilhorst (s4577434)
 title: Title
 subtitle: Subtitle
-date: \today
+date: today
 
 documentclass: tufte-handout
 papersize: a4
