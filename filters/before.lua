@@ -3,12 +3,13 @@ function Str(str)
 
   if not ref then return end
 
+  origRef = ref
   ref = string.lower(ref)
 
   if excls == "!" then
     print("transforming " .. ref .. " to cleverref")
 
-    isUpper = string.match(ref, "^%u")
+    isUpper = string.match(origRef, "^%u")
 
     if isUpper then
         cref = "Cref"
