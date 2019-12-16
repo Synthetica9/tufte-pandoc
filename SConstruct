@@ -3,7 +3,7 @@ from pprint import pprint
 import shlex
 import sys
 import yaml
-
+import subprocess
 
 PANDOC = 'PANDOC'
 
@@ -23,6 +23,10 @@ def bibFiles(fileName):
             pass
 
 
+def which(executable):
+    return subprocess.check_output(['which', executable]).decode('utf8').strip()
+
+
 def pandoc(target, source, env, for_signature):
     command = list(env.get('PANDOC', ['pandoc']))
 
@@ -35,9 +39,16 @@ def pandoc(target, source, env, for_signature):
         command += ['-o', outfile]
 
     for filt in asList(env.get('FILTERS', [])):
-        # env.Depends(target, filt)
         filt = str(filt)
-        filt_arg = '--lua-filter' if filt.lower().endswith('lua') else '--filter'
+
+        isLua = filt.lower().endswith('lua')
+
+        if not isLua:
+            filt = which(filt)
+
+        env.Depends(target, filt)
+
+        filt_arg = '--lua-filter' if isLua else '--filter'
         command += [filt_arg, filt]
 
     return shlex.join(map(str, command))
