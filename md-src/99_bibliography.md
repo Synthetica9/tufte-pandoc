@@ -1,11 +1,11 @@
-# Bibliography {.unnumbered}
-
+<!-- markdownlint-disable MD041 -->
 
 :::: twocolumn
 
+# Bibliography {.unnumbered}
+
 ::: { #refs }
 :::
-
 
 :::::
 
