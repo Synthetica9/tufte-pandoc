@@ -54,13 +54,6 @@ def pandoc(target, source, env, for_signature):
     return shlex.join(map(str, command))
 
 
-headerFile = [
-    "echo '---' > $TARGET",
-    "yq . $SOURCE >> $TARGET",
-    "echo '---' >> $TARGET",
-]
-
-
 genv = Environment(
     ENV={'PATH': os.environ['PATH']}  # Propagate path
 )
@@ -73,7 +66,6 @@ genv.Append(BUILDERS={
         PANDOC=['codebraid', 'pandoc', '--no-cache'],
     ),
     'Pandoc': Builder(generator=pandoc),
-    'Header': Builder(action=headerFile, suffix='.md'),
     # 'PandocTemplate': Builder(action='pandoc -D $TYPE > $TARGET'),
 })
 
