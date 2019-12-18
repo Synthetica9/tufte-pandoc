@@ -69,6 +69,10 @@ Intended usage: `nix-shell --run scons`
 
 If you can't use Nix for some reason, you'll have to install at least this software.
 
+## Attribution
+
+If you use this template, you can credit @hilhorst-19, which is included in the default Biblatex file.
+
 ## Future work
 
 * Use nix-build instead of nix-shell, for performance, persistence, and reproducibility.
