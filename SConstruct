@@ -111,7 +111,7 @@ if have_nix:
 
 combined = genv.Pandoc(
     ".build/combined.json", braided,
-    FILTERS=["./filters/after.lua", "pandoc-citeproc"],
+    FILTERS=["pandoc-citeproc", "./filters/after.lua"],
     PANDOC_OPTS=['--metadata-file', yaml_header],
 )
 
