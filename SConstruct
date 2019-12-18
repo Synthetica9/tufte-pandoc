@@ -1,9 +1,11 @@
 import os
 from pprint import pprint
 import shlex
+import shutil
 import sys
 import yaml
 import subprocess
+from pathlib import Path as LPath
 
 PANDOC = 'PANDOC'
 
@@ -23,8 +25,8 @@ def bibFiles(fileName):
             pass
 
 
-def which(executable):
-    return subprocess.check_output(['which', executable]).decode('utf8').strip()
+have_nix = shutil.which('nix') is not None
+print(have_nix)
 
 
 def pandoc(target, source, env, for_signature):
@@ -44,7 +46,7 @@ def pandoc(target, source, env, for_signature):
         isLua = filt.lower().endswith('lua')
 
         if not isLua:
-            filt = which(filt)
+            filt = shutil.which(filt)
 
         env.Depends(target, filt)
 
@@ -55,7 +57,10 @@ def pandoc(target, source, env, for_signature):
 
 
 genv = Environment(
-    ENV={'PATH': os.environ['PATH']}  # Propagate path
+    ENV={
+        'PATH': os.environ['PATH'],  # Propagate path
+        'NIX_PATH': os.environ['NIX_PATH'],  # Propagate nix path
+    }
 )
 
 genv.Append(BUILDERS={
@@ -66,7 +71,12 @@ genv.Append(BUILDERS={
         PANDOC=['codebraid', 'pandoc', '--no-cache'],
     ),
     'Pandoc': Builder(generator=pandoc),
-    # 'PandocTemplate': Builder(action='pandoc -D $TYPE > $TARGET'),
+    'NixBuild': Builder(
+        action=[
+            'nix build -f $SOURCE -o $TARGET',
+        ]
+    )
+
 })
 
 genv.VariantDir('.build', '.', duplicate=0)
@@ -74,8 +84,6 @@ genv.VariantDir('.build', '.', duplicate=0)
 md_files = Glob(".build/md-src/*.md")
 yaml_header = "header.yaml"
 tex_header = "header.tex"
-# template = genv.PandocTemplate(
-# target='.build/template.tex', source=[], TYPE='latex')
 
 braided = [
     genv.CodeBraid(
@@ -85,6 +93,21 @@ braided = [
     )
     for md in md_files
 ]
+
+if have_nix:
+    environments = Glob('environments/*.nix')
+    for nix_file in environments:
+        p = LPath(str(nix_file))
+        out_path = str(p.parent.joinpath(p.stem))
+        escaped = shlex.quote(out_path)
+        rm_command = 'readlink {0} && rm {0} || true'.format(escaped)
+        print('Hacking around SCons limitation by removing symlink now.')
+        print(rm_command)
+        subprocess.check_call(rm_command, shell=True)
+        genv.NixBuild(out_path, nix_file)
+        for braided_file in braided:
+            genv.Depends(braided_file, out_path)
+
 
 combined = genv.Pandoc(
     ".build/combined.json", braided,

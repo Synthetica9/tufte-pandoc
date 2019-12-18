@@ -1,10 +1,8 @@
 { pkgsHash ? "86ed15dcce7de9c9cac5755663b622142a89d76d" }:
 
 let
-
-  pkgs = import
-    (builtins.fetchTarball "https://github.com/nixos/Nixpkgs/archive/${pkgsHash}.tar.gz")
-    { config.allowBroken = true; };
+  nixpkgs = builtins.fetchTarball "https://github.com/nixos/Nixpkgs/archive/${pkgsHash}.tar.gz";
+  pkgs = import nixpkgs { config.allowBroken = true; };
 
 in
 
@@ -24,20 +22,24 @@ let
       lipsum;
   };
 
-  scons_py3 = scons.override { python2Packages = python38Packages; };
+  scons_py_packages = python38Packages;
+  scons_py3 = scons.override { python2Packages = scons_py_packages; };
   scons_withPackages = scons_py3.overrideAttrs (old: {
       propagatedBuildInputs = old.propagatedBuildInputs or [] ++
-        (with python38Packages; [pyyaml]);
+        (with scons_py_packages; [ pyyaml ]);
   });
 in
 mkShell {
   buildInputs = with haskell.packages.ghc881; [
-    pandoc_2_9
+    codebraid_jupyter
+    jupyter_python
     latex
     librsvg
-    nixpkgs-codebraid.codebraid
-    scons_withPackages
-    yq
+    nixpkgs-codebraid.jupyter
+    pandoc_2_9
     pandoc-citeproc_0_16_4_1
+    scons_withPackages
   ];
+
+  NIX_PATH = "nixpgks=${nixpkgs}";
 }

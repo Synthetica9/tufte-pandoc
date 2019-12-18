@@ -1,6 +1,6 @@
 # Tufte-Pandoc
 
-[![Build Status](https://travis-ci.org/Synthetica9/tufte-pandoc.svg?branch=master){width=80px}](https://travis-ci.org/Synthetica9/tufte-pandoc)
+[![Build Status](https://travis-ci.org/Synthetica9/tufte-pandoc.svg?branch=master)](https://travis-ci.org/Synthetica9/tufte-pandoc)
 
 A template/scaffold that can be used to generate LaTeX documents.
 
@@ -37,6 +37,10 @@ Intended usage: `nix-shell --run scons`
 `out.pdf`
 
 : The final PDF file.
+
+`environments`
+
+: You can place nix files here, they will be built and linked under the same name.
 
 `.build/`
 

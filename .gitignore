@@ -1,6 +1,6 @@
 .build/
 
-*.pdf
+/out.pdf
 
 # for projects that use SCons for building: https://www.scons.org/
 .sconsign.dblite
@@ -8,3 +8,7 @@
 # When configure fails, SCons outputs these
 config.log
 .sconf_temp
+
+# Ignore built environments:
+/environments/*
+!/environments/*.nix
