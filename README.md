@@ -4,7 +4,20 @@
 
 A template/scaffold that can be used to generate LaTeX documents.
 
-Intended usage: `nix-shell --run scons`
+## Intended usage
+
+    # Clone into wanted directory:
+    git clone https://github.com/synthetica9/tufte-pandoc Report
+    cd Report
+
+    # Remove unneeded files:
+    ./init.sh
+
+    # Build it:
+    nix-shell --run scons
+
+After that, you should probably edit `header.yaml` to add your own name, title and subtitle.
+After that, you can add files to `md-src/`.
 
 ## Files
 
