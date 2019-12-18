@@ -31,11 +31,9 @@ let
 in
 mkShell {
   buildInputs = with haskell.packages.ghc881; [
-    codebraid_jupyter
-    jupyter_python
+    nixpkgs-codebraid.codebraid
     latex
     librsvg
-    nixpkgs-codebraid.jupyter
     pandoc_2_9
     pandoc-citeproc_0_16_4_1
     scons_withPackages
