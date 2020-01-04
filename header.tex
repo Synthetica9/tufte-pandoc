@@ -1,4 +1,5 @@
 \usepackage{cleveref}
+\usepackage[ligatures]{semantic}
 
 \newenvironment{widetwocolumn}
 {
@@ -9,5 +10,12 @@
     \end{multicols}
     \end{fullwidth}
 }
+
+% https://tex.stackexchange.com/questions/307745/xelatex-latin-modern-mathbb-and-mathcal
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+\let\mathbb\relax % remove the definition by unicode-math
+\DeclareMathAlphabet{\mathbb}{U}{msb}{m}{n}
+
+\mathlig{<N>}{\mathbb{N}}
 
 \usepackage{lipsum}
