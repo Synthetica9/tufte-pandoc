@@ -8,15 +8,12 @@ print(__file__)
 
 ::: widefigure
 
-lipsum
-
-: Wide lipsum for [!w-i-d-e-b-o-i-e].
-
-moreover
-
-: We can continue our definition list inside the figure, only the first item counts.
-
 \lipsum[1]
+
+---
+
+Wide lipsum for [!w-i-d-e-b-o-i-e].
+[!!lipsum]
 
 :::
 
@@ -24,4 +21,10 @@ moreover
 
 ## Continuing with smol text
 
+In two columns this time!
+
+:::twocolumn
+
 \lipsum
+
+:::

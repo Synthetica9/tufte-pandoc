@@ -1,10 +1,3 @@
-function Meta(m)
-  if pandoc.utils.stringify(m.date) == "today" then
-    m.date = os.date("%Y-%m-%d")
-  end
-  return m
-end
-
 function Div(div)
   if div.identifier == "outer-refs" then
     for _, block in pairs(div.content) do

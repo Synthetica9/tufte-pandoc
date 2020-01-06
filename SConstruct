@@ -5,7 +5,7 @@ import shutil
 import sys
 import yaml
 import subprocess
-from pathlib import Path as LPath
+from pathlib import Path as Path
 
 PANDOC = 'PANDOC'
 
@@ -23,6 +23,18 @@ def bibFiles(fileName):
             yield from header['bibliography']
         except KeyError:
             pass
+
+
+def withExtension(filename, extension):
+    p = str(Path(str(filename)).with_suffix(extension))
+    return p
+
+
+def concat(xss):
+    xs = []
+    for l in xss:
+        xs += l
+    return xs
 
 
 have_nix = shutil.which('nix') is not None
@@ -85,19 +97,22 @@ md_files = Glob(".build/md-src/*.md")
 yaml_header = "header.yaml"
 tex_header = "header.tex"
 
-braided = [
+braided = concat(
     genv.CodeBraid(
         md,
-        FILTERS="./filters/before.lua",
-        PANDOC_OPTS='--extract-media .build/media'
+        FILTERS=[
+            "./filters/insert-rawblocks.lua",
+            "./filters/bangref-cref.lua",
+        ],
+        PANDOC_OPTS='--from markdown --extract-media .build/media'
     )
     for md in md_files
-]
+)
 
 if have_nix:
     environments = Glob('environments/*.nix')
     for nix_file in environments:
-        p = LPath(str(nix_file))
+        p = Path(str(nix_file))
         out_path = str(p.parent.joinpath(p.stem))
         escaped = shlex.quote(out_path)
         rm_command = 'readlink {0} && rm {0} || true'.format(escaped)
@@ -111,14 +126,18 @@ if have_nix:
 
 combined = genv.Pandoc(
     ".build/combined.json", braided,
-    FILTERS=["pandoc-citeproc", "./filters/after.lua"],
+    FILTERS=[
+        "pandoc-citeproc",
+        "./filters/convert-today.lua",
+        "./filters/div-env.lua",
+        "./filters/drop-empty-bibliography.lua"
+    ],
     PANDOC_OPTS=['--metadata-file', yaml_header],
 )
 
 genv.Depends(combined, yaml_header)
 
 genv.Depends(combined, list(bibFiles(yaml_header)))
-
 
 final = genv.PDF(
     "out.pdf", combined,

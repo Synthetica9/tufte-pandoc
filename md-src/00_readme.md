@@ -1,5 +1,5 @@
 <!-- markdownlint-disable MD041 -->
 
 ``` { .bash .cb.run }
-cat README.md
+pandoc --to markdown --from gfm README.md
 ```

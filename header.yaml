@@ -8,6 +8,14 @@ papersize: a4
 numbersections: true
 toc: false
 
+# Convert these div classes to latex environments:
+div-conversions:
+    figure: "figure"
+    sidebar: "marginfigure"
+    marginfigure: "marginfigure"
+    widefigure: "figure*"
+    twocolumn: "widetwocolumn"
+
 # Options for pandoc-citeproc:
 bibliography:
     - bibliography.bib

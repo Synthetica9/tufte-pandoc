@@ -16,7 +16,7 @@ let
       # Required packages:
       ifoddpage relsize xifthen ifmtarg datatool xfor substr trimspaces
       cleveref
-      tufte-latex hardwrap titlesec
+      tufte-latex hardwrap titlesec semantic
 
       # User packages:
       lipsum;
