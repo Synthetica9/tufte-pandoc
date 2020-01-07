@@ -19,7 +19,7 @@ def asList(x, convert=lambda x: [x]):
 
 def bibFiles(fileName):
     with open(fileName) as f:
-        header = yaml.load(f)
+        header = yaml.load(f, loader=yaml.FullLoader)
         try:
             yield from header['bibliography']
         except KeyError:
@@ -29,7 +29,7 @@ def bibFiles(fileName):
 def reflowMeta(target, source, env):
     source, = source
     with open(str(source)) as f:
-        meta = yaml.load(f)
+        meta = yaml.load(f, loader=yaml.FullLoader)
 
     def downloadCitationStyle():
         try:
