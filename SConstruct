@@ -201,7 +201,8 @@ combined = genv.Pandoc(
         "pandoc-citeproc",
         "./filters/convert-today.lua",
         "./filters/div-env.lua",
-        "./filters/drop-empty-bibliography.lua"
+        "./filters/drop-empty-bibliography.lua",
+        "./filters/minipage-references.lua",
     ],
     PANDOC_OPTS=['--metadata-file', *meta],
 )
