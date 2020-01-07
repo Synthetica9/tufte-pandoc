@@ -38,7 +38,7 @@ def concat(xss):
 
 
 have_nix = shutil.which('nix') is not None
-print(have_nix)
+
 
 
 def pandoc(target, source, env, for_signature):
