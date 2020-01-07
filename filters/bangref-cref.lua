@@ -1,20 +1,20 @@
 function Str(str)
-  start, excls, ref, finish = string.match(str.text, "^(.*)%[(%!+)(.+)%](.*)$")
+  local start, excls, ref, finish = string.match(str.text, "^(.*)%[(%!+)(.+)%](.*)$")
 
   if not ref then return end
 
-  origRef = ref
+  local origRef = ref
   ref = string.lower(ref)
 
+  local latex = ""
   if excls == "!" then
     print("transforming " .. ref .. " to cleverref")
 
-    isUpper = string.match(origRef, "^%u")
+    local isUpper = string.match(origRef, "^%u")
 
+    local cref = "cref"
     if isUpper then
         cref = "Cref"
-    else
-        cref = "cref"
     end
 
     latex = "\\" .. cref .. "{" .. ref .. "}"

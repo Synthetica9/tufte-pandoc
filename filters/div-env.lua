@@ -56,10 +56,10 @@ local function extract_caption(blocks)
 end
 
 local function divEnv(div, keyword, env)
-  included = elem(div.classes, keyword)
+  local included = elem(div.classes, keyword)
   if included then
     print("Transforming div " .. keyword .. " to env " .. env)
-    caption = extract_caption(div.content)
+    local caption = extract_caption(div.content)
     if caption == nil then
         caption = pandoc.Null()
     end
@@ -79,7 +79,7 @@ end
 
 local function transformDivs(div)
   for k, v in pairs(conversions) do
-    trans = divEnv(div, k, pandoc.utils.stringify(v))
+    local trans = divEnv(div, k, pandoc.utils.stringify(v))
     if trans ~= nil then
       return trans
     end
