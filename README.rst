@@ -1,8 +1,6 @@
 Tufte-Pandoc
 ============
 
-.. This file is in RST because gfm doesn't support definition lists.
-
 |Build Status|
 
 A template/scaffold that can be used to generate LaTeX documents.
@@ -22,8 +20,8 @@ Intended usage
    # Build it:
    nix-shell --run scons
 
-After that, you should probably edit ``meta.yaml`` to add your own
-name, title and subtitle. After that, you can add files to ``md-src/``.
+After that, you should probably edit ``meta.yaml`` to add your own name,
+title and subtitle. After that, you can add files to ``md-src/``.
 
 Files
 -----
@@ -66,7 +64,42 @@ Custom syntax
    capital), the reference is also capitalised.
 
 ``[!!label]``
-   Create a label. This is usually not needed.
+   Create a label.
+
+captions
+   Captions are created as follows:
+
+   ::
+
+      ::: figure
+
+      FIGURE GOES HERE
+
+      ---
+
+      CAPTION GOES HERE
+      [!!label]
+
+      :::
+
+   If you need a horizontal rule inside a figure but don't want a
+   caption, that can be done as follows:
+
+   ::
+
+      ::: figure
+
+      FIGURE GOES HERE
+
+      ---
+
+      CONTINUE WITH FIGURE
+
+      ---
+
+      :::
+
+   The bottom rule will be deleted.
 
 Software used
 -------------
