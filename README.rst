@@ -44,12 +44,8 @@ Files
 ``bibliography.bib``
    Biblatex file containing bibliography entries.
 
-``filters/before.lua``
-   The filter that is ran after the Codebraid stage.
-
-``filters/after.lua``
-   The filter that is ran after the combination stage (before PDF
-   generation).
+``filters/*.lua``
+   Filters that are run at various stages.
 
 ``out.pdf``
    The final PDF file.
