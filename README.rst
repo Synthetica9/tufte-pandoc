@@ -119,8 +119,8 @@ this software.
 Attribution
 -----------
 
-If you use this template, you can credit @hilhorst-19, which is included
-in the default Biblatex file.
+If you use this template, you can credit ``@hilhorst-19``, which is
+included in the default Biblatex file.
 
 Future work
 -----------
