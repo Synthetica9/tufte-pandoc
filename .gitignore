@@ -12,3 +12,5 @@ config.log
 # Ignore built environments:
 /environments/*
 !/environments/*.nix
+
+.vscode
