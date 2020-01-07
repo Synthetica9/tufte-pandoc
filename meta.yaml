@@ -20,7 +20,7 @@ div-conversions:
 bibliography:
     - bibliography.bib
 # Uncomment for ACM SIGGRAPH citations:
-citation-style: https://www.zotero.org/styles/acm-siggraph
+citation-style: ACM-SIGGRAPH
 # Uncomment for IEEE-Style citations:
-# citation-style: https://www.zotero.org/styles/ieee
+# citation-style: IEEE
 # For more styles, see https://www.zotero.org/styles/

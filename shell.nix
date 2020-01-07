@@ -26,7 +26,7 @@ let
   scons_py3 = scons.override { python2Packages = scons_py_packages; };
   scons_withPackages = scons_py3.overrideAttrs (old: {
       propagatedBuildInputs = old.propagatedBuildInputs or [] ++
-        (with scons_py_packages; [ pyyaml ]);
+        (with scons_py_packages; [ pyyaml requests ]);
   });
 in
 mkShell {

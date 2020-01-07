@@ -5,6 +5,7 @@ import shutil
 import sys
 import yaml
 import subprocess
+import requests
 from pathlib import Path as Path
 
 PANDOC = 'PANDOC'
@@ -25,6 +26,48 @@ def bibFiles(fileName):
             pass
 
 
+def reflowMeta(target, source, env):
+    source, = source
+    with open(str(source)) as f:
+        meta = yaml.load(f)
+
+    def downloadCitationStyle():
+        try:
+            style = meta['citation-style']
+        except KeyError:
+            return
+
+        if os.path.isfile(style):
+            return
+
+        style = style.lower()
+
+        for url in [style, f'https://www.zotero.org/styles/{style}']:
+            try:
+                resp = requests.get(url)
+            except requests.exceptions.RequestException:
+                continue
+            if resp.ok:
+                break
+
+        if not resp.ok:
+            return
+
+        assert resp.ok, "Response should have ok status at this point"
+        path = Path('.build') / (style + '.csl')
+
+        with open(path, 'wb') as f:
+            f.write(resp.content)
+
+        meta['citation-style'] = str(path)
+
+    downloadCitationStyle()
+
+    target, = target
+    with open(str(target), 'x') as f:
+        yaml.dump(meta, f)
+
+
 def withExtension(filename, extension):
     p = str(Path(str(filename)).with_suffix(extension))
     return p
@@ -38,7 +81,6 @@ def concat(xss):
 
 
 have_nix = shutil.which('nix') is not None
-
 
 
 def pandoc(target, source, env, for_signature):
@@ -87,8 +129,10 @@ genv.Append(BUILDERS={
         action=[
             'nix build -f $SOURCE -o $TARGET',
         ]
-    )
-
+    ),
+    'ReflowMeta': Builder(
+        action=reflowMeta
+    ),
 })
 
 genv.VariantDir('.build', '.', duplicate=0)
@@ -124,6 +168,8 @@ if have_nix:
             genv.Depends(braided_file, out_path)
 
 
+meta = genv.ReflowMeta(".build/meta.yaml", yaml_header)
+
 combined = genv.Pandoc(
     ".build/combined.json", braided,
     FILTERS=[
@@ -132,10 +178,10 @@ combined = genv.Pandoc(
         "./filters/div-env.lua",
         "./filters/drop-empty-bibliography.lua"
     ],
-    PANDOC_OPTS=['--metadata-file', yaml_header],
+    PANDOC_OPTS=['--metadata-file', *meta],
 )
 
-genv.Depends(combined, yaml_header)
+genv.Depends(combined, meta)
 
 genv.Depends(combined, list(bibFiles(yaml_header)))
 
