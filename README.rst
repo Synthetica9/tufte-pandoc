@@ -128,7 +128,6 @@ Future work
 -  Use nix-build instead of nix-shell, for performance, persistence, and
    reproducibility.
 -  Rename the default filters to something more descriptive.
--  Create an init script to remove default content.
 -  Add an index file that explicitly lists chapters? (for easier
    reshuffling)
 
