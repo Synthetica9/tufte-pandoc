@@ -56,6 +56,9 @@ Files
    Internal build directory. You should assume this can be deleted at
    any time.
 
+``init.sh``
+   Removes standard build files
+
 Custom syntax
 -------------
 
