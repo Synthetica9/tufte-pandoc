@@ -22,7 +22,7 @@ Intended usage
    # Build it:
    nix-shell --run scons
 
-After that, you should probably edit ``header.yaml`` to add your own
+After that, you should probably edit ``meta.yaml`` to add your own
 name, title and subtitle. After that, you can add files to ``md-src/``.
 
 Files
@@ -32,7 +32,7 @@ Files
    Every file should contain a chapter. Automatically discovered by
    scons.
 
-``header.yaml``
+``meta.yaml``
    Contains variables for the document, such as the title, the subtitle,
    the author, the date.
 

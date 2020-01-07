@@ -94,7 +94,7 @@ genv.Append(BUILDERS={
 genv.VariantDir('.build', '.', duplicate=0)
 
 md_files = Glob(".build/md-src/*.md")
-yaml_header = "header.yaml"
+yaml_header = "meta.yaml"
 tex_header = "header.tex"
 
 braided = concat(
