@@ -4,16 +4,13 @@
 print(__file__)
 ```
 
+::: landscape
+
 ## W I D E B O I E
 
-::: widefigure
+Now, it is really hard to have notes here!^[They go off the page]
 
-\lipsum[1]
-
----
-
-Wide lipsum for [!w-i-d-e-b-o-i-e].
-[!!lipsum]
+\lipsum
 
 :::
 
@@ -21,10 +18,4 @@ Wide lipsum for [!w-i-d-e-b-o-i-e].
 
 ## Continuing with smol text
 
-In two columns this time!
-
-:::twocolumn
-
 \lipsum
-
-:::

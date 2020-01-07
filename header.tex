@@ -1,5 +1,6 @@
 \usepackage{cleveref}
 \usepackage{semantic}
+\usepackage{pdflscape}
 
 \newenvironment{widetwocolumn}
 {
@@ -9,6 +10,18 @@
 {
     \end{multicols}
     \end{fullwidth}
+}
+
+\newenvironment{tufte-landscape}
+{
+    \begin{landscape}
+    \advance\vsize6cm
+    \csname @colroom\endcsname=\vsize
+    \textheight=\vsize
+    \csname @colht\endcsname=\vsize
+}
+{
+    \end{landscape}
 }
 
 % https://tex.stackexchange.com/questions/307745/xelatex-latin-modern-mathbb-and-mathcal

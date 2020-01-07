@@ -14,11 +14,16 @@ classoption: "marginals=raggedouter,notoc"
 
 # Convert these div classes to latex environments:
 div-conversions:
+    # Figure envs
     figure: "figure"
     sidebar: "marginfigure"
     marginfigure: "marginfigure"
     widefigure: "figure*"
+
+    # Text envs
     twocolumn: "widetwocolumn"
+    fullwidth: "fullwidth"
+    landscape: "tufte-landscape"
 
 # Options for pandoc-citeproc:
 bibliography:
