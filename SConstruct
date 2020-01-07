@@ -83,6 +83,30 @@ def concat(xss):
 have_nix = shutil.which('nix') is not None
 
 
+def pandoc_scan(node, env, path):
+    path = str(node)
+    if not os.path.isfile(path):
+        return []
+
+    res = subprocess.check_output(
+        'pandoc --lua-filter filters/gather-dependencies.lua'.split() +
+        [path]
+    )
+    res = res.decode('utf8')
+    lines = res.splitlines()
+
+    for line in lines:
+        if not os.path.isfile(line):
+            print('not a file', line)
+            continue
+        path = os.path.abspath(line)
+        print(path)
+        yield path
+
+
+pdscan = Scanner(function=pandoc_scan)
+
+
 def pandoc(target, source, env, for_signature):
     command = list(env.get('PANDOC', ['pandoc']))
 
@@ -122,6 +146,7 @@ genv.Append(BUILDERS={
     'CodeBraid': Builder(
         generator=pandoc,
         suffix='.json',
+        source_scanner=pdscan,
         PANDOC=['codebraid', 'pandoc', '--no-cache'],
     ),
     'Pandoc': Builder(generator=pandoc),
