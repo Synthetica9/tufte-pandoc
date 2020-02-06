@@ -6,6 +6,6 @@ script:
     # you could change this to your cloned url.
     - echo "Our slug is $TRAVIS_REPO_SLUG"
     - if [[ "$TRAVIS_REPO_SLUG" == "Synthetica9/tufte-pandoc" ]]; then
-        nix-build shell.nix | cachix push tufte-pandoc;
+        nix-instantiate shell.nix | cachix push tufte-pandoc;
       fi
     - nix-shell --run "scons"
