@@ -4,7 +4,7 @@ script:
     - cachix use tufte-pandoc
     # Push to cachix, but only upstream. If you want your own cachix endpoint,
     # you could change this to your cloned url.
-    - if [[ "$TRAVIS_REPO_SLUG" == "synthetica9/tufte-pandoc" ]] then
+    - if [[ "$TRAVIS_REPO_SLUG" == "synthetica9/tufte-pandoc" ]]; then
         nix-build shell.nix | cachix push tufte-pandoc
       fi
     - nix-shell --run "scons"
