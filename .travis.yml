@@ -1,2 +1,6 @@
 language: nix
-script: nix-shell --run "scons"
+script:
+    - nix-env -iA cachix -f https://cachix.org/api/v1/install
+    - cachix use tufte-pandoc
+    - nix-build shell.nix | cachix push tufte-pandoc
+    - nix-shell --run "scons"
