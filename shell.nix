@@ -22,6 +22,13 @@ let
       lipsum;
   };
 
+  ourHaskellPackages = haskell.packages.ghc882;
+  ourPandoc = ourHaskellPackages.pandoc_2_9_1_1;
+
+  codebraid = nixpkgs-codebraid.override {
+    pandoc = ourPandoc;
+  };
+
   scons_py_packages = python38Packages;
   scons_py3 = scons.override { python2Packages = scons_py_packages; };
   scons_withPackages = scons_py3.overrideAttrs (old: {
@@ -30,11 +37,11 @@ let
   });
 in
 mkShell {
-  buildInputs = with haskell.packages.ghc881; [
+  buildInputs = with ourHaskellPackages; [
     nixpkgs-codebraid.codebraid
     latex
     librsvg
-    pandoc_2_9
+    ourPandoc
     pandoc-citeproc_0_16_4_1
     scons_withPackages
   ];
