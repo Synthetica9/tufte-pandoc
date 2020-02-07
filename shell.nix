@@ -39,5 +39,5 @@ mkShell {
     scons_withPackages
   ];
 
-  NIX_PATH = "nixpgks=${nixpkgs}";
+  NIX_PATH = "nixpkgs=${nixpkgs}";
 }
