@@ -1,4 +1,4 @@
-{ pkgsHash ? "86ed15dcce7de9c9cac5755663b622142a89d76d" }:
+{ pkgsHash ? "0c960262d159d3a884dadc3d4e4b131557dad116" }:
 
 let
   nixpkgs = builtins.fetchTarball "https://github.com/nixos/Nixpkgs/archive/${pkgsHash}.tar.gz";
