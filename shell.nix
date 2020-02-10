@@ -1,4 +1,4 @@
-{ pkgsHash ? "0c960262d159d3a884dadc3d4e4b131557dad116" }:
+{ pkgsHash ? "86ed15dcce7de9c9cac5755663b622142a89d76d" }:
 
 let
   nixpkgs = builtins.fetchTarball "https://github.com/nixos/Nixpkgs/archive/${pkgsHash}.tar.gz";
@@ -22,8 +22,8 @@ let
       lipsum;
   };
 
-  ourHaskellPackages = haskell.packages.ghc881;
-  ourPandoc = ourHaskellPackages.pandoc_2_9_1_1;
+  ourHaskellPackages = haskell.packages.ghc865;
+  ourPandoc = ourHaskellPackages.pandoc_2_9;
 
   codebraid = nixpkgs-codebraid.override {
     pandoc = ourPandoc;
