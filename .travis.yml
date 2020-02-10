@@ -5,7 +5,7 @@ script:
     # Push to cachix, but only upstream. If you want your own cachix endpoint,
     # you could change this to your cloned url.
     - echo "Our slug is $TRAVIS_REPO_SLUG"
+    - nix-shell --run "scons"
     - if [[ "$TRAVIS_REPO_SLUG" == "Synthetica9/tufte-pandoc" ]]; then
         nix-instantiate shell.nix | cachix push tufte-pandoc;
       fi
-    - nix-shell --run "scons"
