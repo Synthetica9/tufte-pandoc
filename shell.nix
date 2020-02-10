@@ -22,7 +22,7 @@ let
       lipsum;
   };
 
-  ourHaskellPackages = haskell.packages.ghc865;
+  ourHaskellPackages = haskell.packages.ghc881;
   ourPandoc = ourHaskellPackages.pandoc_2_9;
 
   codebraid = nixpkgs-codebraid.override {
