@@ -19,8 +19,11 @@ let
       lipsum;
   };
 
-  ourHaskellPackages = haskell.packages.ghc882;
-  ourPandoc = ourHaskellPackages.pandoc_2_9_1_1;
+  ourHaskellPackages = haskell.packages.ghc881;
+  ourPandoc = ourHaskellPackages.pandoc_2_9_1_1.overrideAttrs (old: {
+    # 2020-02-25: currently pandoc tests are failing.
+    doCheck = false;
+  });
 
   scons_py_packages = python38Packages;
   scons_py3 = scons.override { python2Packages = scons_py_packages; };
