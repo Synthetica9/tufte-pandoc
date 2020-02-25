@@ -1,17 +1,14 @@
-{ pkgsHash ? "86ed15dcce7de9c9cac5755663b622142a89d76d" }:
+{ pkgsHash ? "d363be93b4957fce418a00340edc8b9bad5a1c88" }:
 
 let
   nixpkgs = builtins.fetchTarball "https://github.com/nixos/Nixpkgs/archive/${pkgsHash}.tar.gz";
   pkgs = import nixpkgs { config.allowBroken = true; };
-
 in
 
 with pkgs;
 
 let
-  nixpkgs-codebraid = import (builtins.fetchTarball "https://github.com/synthetica9/Nixpkgs/archive/codebraid-init.tar.gz") {};
-
-  latex = texlive.combine {
+  ourLatex = texlive.combine {
     inherit (texlive) scheme-medium
       # Required packages:
       ifoddpage relsize xifthen ifmtarg datatool xfor substr trimspaces
@@ -22,28 +19,25 @@ let
       lipsum;
   };
 
-  ourHaskellPackages = haskell.packages.ghc881;
-  ourPandoc = ourHaskellPackages.pandoc_2_9;
-
-  codebraid = nixpkgs-codebraid.override {
-    pandoc = ourPandoc;
-  };
+  ourHaskellPackages = haskell.packages.ghc882;
+  ourPandoc = ourHaskellPackages.pandoc_2_9_1_1;
 
   scons_py_packages = python38Packages;
   scons_py3 = scons.override { python2Packages = scons_py_packages; };
-  scons_withPackages = scons_py3.overrideAttrs (old: {
+  ourScons = scons_py3.overrideAttrs (old: {
       propagatedBuildInputs = old.propagatedBuildInputs or [] ++
         (with scons_py_packages; [ pyyaml requests ]);
   });
 in
 mkShell {
   buildInputs = with ourHaskellPackages; [
-    nixpkgs-codebraid.codebraid
-    latex
-    librsvg
+    ourLatex
     ourPandoc
+    ourScons
+
+    codebraid
+    librsvg
     pandoc-citeproc_0_16_4_1
-    scons_withPackages
   ];
 
   NIX_PATH = "nixpkgs=${nixpkgs}";
