@@ -80,9 +80,6 @@ def concat(xss):
     return xs
 
 
-have_nix = shutil.which('nix') is not None
-
-
 def pandoc_scan(node, env, path):
     path = str(node)
     if not os.path.isfile(path):
@@ -179,14 +176,13 @@ braided = concat(
     for md in md_files
 )
 
-if have_nix:
-    environments = Glob('environments/*.nix')
-    for nix_file in environments:
-        p = Path(str(nix_file))
-        out_path = str(p.parent.joinpath(p.stem))
-        genv.NixBuild(out_path, nix_file)
-        for braided_file in braided:
-            genv.Depends(braided_file, out_path)
+environments = Glob('environments/*.nix')
+for nix_file in environments:
+    p = Path(str(nix_file))
+    out_path = str(p.parent.joinpath(p.stem))
+    genv.NixBuild(out_path, nix_file)
+    for braided_file in braided:
+        genv.Depends(braided_file, out_path)
 
 
 meta = genv.ReflowMeta(".build/meta.yaml", yaml_header)
