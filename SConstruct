@@ -153,7 +153,8 @@ genv.Append(BUILDERS={
     'NixBuild': Builder(
         action=[
             'nix build -f $SOURCE -o $TARGET',
-        ]
+        ],
+        target_factory=Dir,
     ),
     'ReflowMeta': Builder(
         action=reflowMeta
@@ -183,11 +184,6 @@ if have_nix:
     for nix_file in environments:
         p = Path(str(nix_file))
         out_path = str(p.parent.joinpath(p.stem))
-        escaped = shlex.quote(out_path)
-        rm_command = 'readlink {0} && rm {0} || true'.format(escaped)
-        print('Hacking around SCons limitation by removing symlink now.')
-        print(rm_command)
-        subprocess.check_call(rm_command, shell=True)
         genv.NixBuild(out_path, nix_file)
         for braided_file in braided:
             genv.Depends(braided_file, out_path)
