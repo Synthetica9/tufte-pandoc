@@ -25,14 +25,16 @@ An example [!!example]
 
 ::: { .sidebar }
 
-Some math in the margin:
+Some aligned math in the margin:
 
-$$E = mc^2$$
-$$π = 4$$
+```align
+E &= mc^2 \\
+π &= 4
+```
 
 ---
 
-Some maths in the sidebar [!!sbm]
+Some aligned maths in the sidebar [!!sbm]
 
 :::
 

@@ -25,6 +25,9 @@ div-conversions:
     fullwidth: "fullwidth"
     landscape: "tufte-landscape"
 
+code-conversions:
+    align: "align*"
+
 # Options for pandoc-citeproc:
 bibliography:
     - bibliography.bib

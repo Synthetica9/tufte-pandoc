@@ -1,4 +1,3 @@
-conversions = nil
 hrule = pandoc.HorizontalRule()
 
 local function elem(xs, x, eq)
@@ -74,11 +73,12 @@ local function divEnv(div, keyword, env)
 end
 
 local function setConversions(meta)
-  conversions = meta["div-conversions"]
+  divConversions = meta["div-conversions"] or {}
+  codeConversions = meta["code-conversions"] or {}
 end
 
 local function transformDivs(div)
-  for k, v in pairs(conversions) do
+  for k, v in pairs(divConversions) do
     local trans = divEnv(div, k, pandoc.utils.stringify(v))
     if trans ~= nil then
       return trans
@@ -87,7 +87,25 @@ local function transformDivs(div)
   return div
 end
 
+local function transformCodeBlocks(code)
+  for k, v in pairs(code.classes) do
+    env = codeConversions[v]
+    if env ~= nil then
+      env = pandoc.utils.stringify(env)
+      return pandoc.RawBlock("latex",
+        "\\begin{" .. env .. "}\n" ..
+        code.text ..
+        "\\end{" .. env .. "}"
+      )
+    end
+  end
+end
+
+
 return {
   { Meta = setConversions },
-  { Div = transformDivs },
+  {
+    Div = transformDivs,
+    CodeBlock = transformCodeBlocks,
+  },
 }
