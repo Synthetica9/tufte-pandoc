@@ -5,9 +5,12 @@ end
 
 -- Print the source for every included file
 function codeSrc(block)
-  include_file = block.attributes["include_file"]
-  if include_file ~= nil then
-    print(include_file)
+  attributes = {"include_file", "executable"}
+  for _, attribute in ipairs(attributes) do
+    file = block.attributes[attribute]
+    if file ~= nil then
+      print(file)
+    end
   end
 end
 
