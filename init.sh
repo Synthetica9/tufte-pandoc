@@ -8,5 +8,3 @@ rm -v bibliography.bib && touch bibliography.bib
 rm -v init.sh
 rm -v environments/*
 
-# Open the the metadata in your favourite editor:
-exec $EDITOR meta.yaml
