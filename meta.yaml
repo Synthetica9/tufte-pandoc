@@ -5,11 +5,11 @@ date: today
 
 documentclass: tufte-handout
 papersize: a4
-numbersections: true
-toc: true
+numbersections: false
+toc: false
 
 # Stop TOC from ragging
-classoption: "marginals=raggedouter,notoc"
+# classoption: "marginals=raggedouter,notoc"
 
 
 # Convert these div classes to latex environments:
