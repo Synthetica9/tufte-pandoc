@@ -1,18 +1,18 @@
 { pkgsHash ? "d363be93b4957fce418a00340edc8b9bad5a1c88" }:
 
 let
-  nixpkgs = builtins.fetchTarball "https://github.com/nixos/Nixpkgs/archive/${pkgsHash}.tar.gz";
+  nixpkgs = builtins.fetchTarball
+    "https://github.com/nixos/Nixpkgs/archive/${pkgsHash}.tar.gz";
   pkgs = import nixpkgs { config.allowBroken = true; };
-in
 
-with pkgs;
+in with pkgs;
 
 let
   ourLatex = texlive.combine {
-    inherit (texlive) scheme-medium
+    inherit (texlive)
+      scheme-medium
       # Required packages:
-      ifoddpage relsize xifthen ifmtarg datatool xfor substr trimspaces
-      cleveref
+      ifoddpage relsize xifthen ifmtarg datatool xfor substr trimspaces cleveref
       tufte-latex hardwrap titlesec semantic
 
       # User packages:
@@ -28,11 +28,10 @@ let
   scons_py_packages = python38Packages;
   scons_py3 = scons.override { python2Packages = scons_py_packages; };
   ourScons = scons_py3.overrideAttrs (old: {
-      propagatedBuildInputs = old.propagatedBuildInputs or [] ++
-        (with scons_py_packages; [ pyyaml requests ]);
+    propagatedBuildInputs = old.propagatedBuildInputs or [ ]
+      ++ (with scons_py_packages; [ pyyaml requests ]);
   });
-in
-mkShell {
+in mkShell {
   buildInputs = with ourHaskellPackages; [
     ourLatex
     ourPandoc
