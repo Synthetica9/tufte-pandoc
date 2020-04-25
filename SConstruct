@@ -195,6 +195,7 @@ combined = genv.Pandoc(
         "./filters/div-env.lua",
         "./filters/drop-empty-bibliography.lua",
         "./filters/minipage-references.lua",
+        "./filters/sage-python-highlighting.lua",
     ],
     PANDOC_OPTS=['--metadata-file', *meta],
 )
