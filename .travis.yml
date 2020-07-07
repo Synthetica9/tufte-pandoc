@@ -1,7 +1,7 @@
 language: nix
 script:
     - nix-env -iA cachix -f https://cachix.org/api/v1/install
-    - cachix use tufte-pandoc
+    - sudo cachix use tufte-pandoc
     # Push to cachix, but only upstream. If you want your own cachix endpoint,
     # you could change this to your cloned url.
     - echo "Our slug is $TRAVIS_REPO_SLUG"
