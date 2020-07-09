@@ -13,7 +13,7 @@ let
       scheme-medium
       # Required packages:
       ifoddpage relsize xifthen ifmtarg datatool xfor substr trimspaces cleveref
-      tufte-latex hardwrap titlesec semantic catchfile
+      tufte-latex hardwrap titlesec semantic catchfile framed
 
       # User packages:
       lipsum;

@@ -1,6 +1,7 @@
 \usepackage{cleveref}
 \usepackage{semantic}
 \usepackage{pdflscape}
+\usepackage{framed}
 
 \newenvironment{widetwocolumn}
 {
@@ -34,5 +35,9 @@
 % These are broken by default for an unknown reason. We fix them with matlig:
 \mathlig{-}{\minus} % Normally renders as whitespace due to missing character.
 \mathlig{|}{\mid} % Normally renders as "j"
+
+\renewenvironment{quote}%
+{\begin{leftbar}\begin{quotation}}%
+{\end{quotation}\end{leftbar}}
 
 \usepackage{lipsum}
