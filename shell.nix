@@ -1,8 +1,8 @@
-{ pkgsHash ? "codebraid-2020-07-01" }:
+{ pkgsHash ? "1d8018068278a717771e9ec4054dff1ebd3252b0" }:
 
 let
   nixpkgs = builtins.fetchTarball
-    "https://github.com/synthetica9/Nixpkgs/archive/${pkgsHash}.tar.gz";
+    "https://github.com/NixOS/Nixpkgs/archive/${pkgsHash}.tar.gz";
   pkgs = import nixpkgs { config.allowBroken = true; };
 
 in with pkgs;
@@ -32,10 +32,10 @@ in mkShell {
     ourLatex
     ourScons
 
-	pandoc
+    pandoc
     codebraid
     librsvg
-    pandoc-citeproc_0_17_0_1
+    pandoc-citeproc
     entr
   ];
 
