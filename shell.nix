@@ -1,4 +1,4 @@
-{ pkgsHash ? "1d8018068278a717771e9ec4054dff1ebd3252b0" }:
+{ pkgsHash ? "999abcfc07286f9d2f88fbe31954df5cfd98db87" }:
 
 let
   nixpkgs = builtins.fetchTarball
@@ -22,8 +22,7 @@ let
   ourHaskellPackages = haskell.packages.ghc883;
 
   scons_py_packages = python38Packages;
-  scons_py3 = scons.override { python2Packages = scons_py_packages; };
-  ourScons = scons_py3.overrideAttrs (old: {
+  ourScons = scons.overrideAttrs (old: {
     propagatedBuildInputs = old.propagatedBuildInputs or [ ]
       ++ (with scons_py_packages; [ pyyaml requests ]);
   });
