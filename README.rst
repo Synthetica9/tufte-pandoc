@@ -119,7 +119,7 @@ this software.
 Attribution
 -----------
 
-If you use this template, you can credit ``@hilhorst-19``, which is
+If you use this template, you can (but don't have to, as per the CC0 licensing) credit ``@hilhorst-19``, which is
 included in the default Biblatex file.
 
 Future work
