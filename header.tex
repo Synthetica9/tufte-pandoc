@@ -2,6 +2,8 @@
 \usepackage{semantic}
 \usepackage{pdflscape}
 \usepackage{framed}
+\usepackage{fontspec}
+\usepackage{ifxetex}
 
 \newenvironment{widetwocolumn}
 {
@@ -41,3 +43,20 @@
 {\end{quotation}\end{leftbar}}
 
 \usepackage{lipsum}
+
+% https://tex.stackexchange.com/questions/324754/what-is-the-default-font-in-the-tufte-handout-class
+\setmainfont[Numbers=OldStyle, Scale = 1.0]{TeX Gyre Pagella}
+\setsansfont[Scale=0.90]{TeX Gyre Heros}
+\setmonofont{TeX Gyre Cursor}
+
+% https://tex.stackexchange.com/questions/37561/getting-started-with-minion-pro-xelatex-and-mathspec
+\ifxetex
+  \newcommand{\ttls}[2][5]{%
+    \begingroup\addfontfeatures{LetterSpace=#1}#2\endgroup
+  }
+  \renewcommand{\allcapsspacing}[1]{\ttls[15]{#1}}
+  \renewcommand{\smallcapsspacing}[1]{\ttls[10]{#1}}
+  \renewcommand{\allcaps}[1]{\ttls[15]{\MakeTextUppercase{#1}}}
+  \renewcommand{\smallcaps}[1]{\smallcapsspacing{\scshape\MakeTextLowercase{#1}}}
+  \renewcommand{\textsc}[1]{\smallcapsspacing{\textsmallcaps{#1}}}
+\fi

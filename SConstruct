@@ -156,6 +156,13 @@ genv.Append(BUILDERS={
     'ReflowMeta': Builder(
         action=reflowMeta
     ),
+    'XeLaTeX': Builder(
+        action='xelatex $SOURCE'
+        # action='xelatex -interaction=nonstopmode $SOURCE'
+    ),
+    'SVG2PDF': Builder(
+        action='rsvg-convert -f pdf $SOURCE -o $TARGET'
+    ),
 })
 
 genv.VariantDir('.build', '.', duplicate=0)
@@ -190,23 +197,35 @@ meta = genv.ReflowMeta(".build/meta.yaml", yaml_header)
 combined = genv.Pandoc(
     ".build/combined.json", braided,
     FILTERS=[
-        "pandoc-citeproc",
         "./filters/convert-today.lua",
         "./filters/div-env.lua",
         "./filters/drop-empty-bibliography.lua",
         "./filters/minipage-references.lua",
         "./filters/sage-python-highlighting.lua",
     ],
-    PANDOC_OPTS=['--metadata-file', *meta],
+    PANDOC_OPTS=['--metadata-file', *meta, '--citeproc'],
 )
 
 genv.Depends(combined, meta)
 
 genv.Depends(combined, list(bibFiles(yaml_header)))
 
-final = genv.PDF(
-    "out.pdf", combined,
-    PANDOC_OPTS="--pdf-engine xelatex -H".split() + [tex_header]
+latex = genv.Pandoc(
+    ".build/out.tex", ".build/combined.json",
+    FILTERS=['./filters/svg-to-pdf.lua'],
+    PANDOC_OPTS=["-H", tex_header]
 )
 
-genv.Depends(final, tex_header)
+pdf_svgs = concat(
+    genv.SVG2PDF(str(svg) + '.pdf', svg)
+    for svg in genv.Glob('.build/media/*.svg')
+)
+
+genv.Depends(latex, tex_header)
+
+aux_files = genv.Glob("*.aux")
+final = genv.XeLaTeX(
+    "out.pdf", ".build/out.tex"
+)
+
+# genv.Depends(final, aux_files)

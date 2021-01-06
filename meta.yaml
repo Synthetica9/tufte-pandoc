@@ -4,13 +4,13 @@ subtitle: Subtitle
 date: today
 
 documentclass: tufte-handout
+classoption: nofonts
 papersize: a4
 numbersections: false
 toc: false
 
 # Stop TOC from ragging
 # classoption: "marginals=raggedouter,notoc"
-
 
 # Convert these div classes to latex environments:
 div-conversions:

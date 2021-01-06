@@ -1,9 +1,9 @@
-{ pkgsHash ? "999abcfc07286f9d2f88fbe31954df5cfd98db87" }:
+{ pkgsHash ? "a4936a77b5487b0233c470a09576a974b0b24934" }:
 
 let
   nixpkgs = builtins.fetchTarball
     "https://github.com/NixOS/Nixpkgs/archive/${pkgsHash}.tar.gz";
-  pkgs = import nixpkgs { config.allowBroken = true; };
+  pkgs = import nixpkgs { };
 
 in with pkgs;
 
@@ -19,7 +19,8 @@ let
       lipsum;
   };
 
-  ourHaskellPackages = haskell.packages.ghc883;
+  #   ourHaskellPackages = haskell.packages.ghc883;
+  ourHaskellPackages = haskellPackages;
 
   scons_py_packages = python38Packages;
   ourScons = scons.overrideAttrs (old: {
@@ -34,7 +35,6 @@ in mkShell {
     pandoc
     codebraid
     librsvg
-    pandoc-citeproc
     entr
   ];
 
